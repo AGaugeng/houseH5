@@ -1,0 +1,23 @@
+{
+    "data": [{
+        
+        "title": "二手房",
+        "router": "ResoldHouse",
+        "imgUrl": "require"
+    },
+    {
+        "title": "新房",
+       "router": "NewHouse",
+        "imgUrl": "require"
+    },
+    {
+        "title": "房源管理",
+        "router": "HouseManage",
+        "imgUrl": "require"
+    },
+    {
+        "title": "合同管理",
+        "router": "Contract",
+        "imgUrl": "require"
+    }]
+}

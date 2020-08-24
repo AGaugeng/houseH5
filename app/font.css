@@ -1,0 +1,171 @@
+@font-face {
+  font-family: "Entypo";
+  src: url("~react-native-vector-icons/Fonts/Entypo.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "EvilIcons";
+  src: url("~react-native-vector-icons/Fonts/EvilIcons.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "FontAwesome";
+  src: url("~react-native-vector-icons/Fonts/FontAwesome.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "fontcustom";
+  src: url("~react-native-vector-icons/Fonts/Foundation.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Ionicons";
+  src: url("~react-native-vector-icons/Fonts/Ionicons.ttf") format("truetype");
+}
+
+@font-face {
+  /*font-family: 'MaterialCommunityIcons';*/
+  font-family: "Material Design Icons";
+  src: url("~react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "MaterialIcons";
+  src: url("~react-native-vector-icons/Fonts/MaterialIcons.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "Octicons";
+  src: url("~react-native-vector-icons/Fonts/Octicons.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "simple-line-icons";
+  src: url("~react-native-vector-icons/Fonts/SimpleLineIcons.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "Zocial";
+  src: url("~react-native-vector-icons/Fonts/Zocial.ttf") format("truetype");
+}
+
+.row{
+ display: flex;
+  justify-content: space-between;
+  align-items:center;
+  margin-top: 10px;
+
+}
+.row label{
+  /* display:inline-block; */
+  margin-left:45px;
+  font-weight:bold;
+  margin-right:10px;
+}
+.row input{
+  border:solid 1px #bbb;
+  height:2000px;
+  width:230px;
+  text-indent: 10px;
+  font-size: 14px;
+}
+.media{
+  width:298px;
+  height:100px;
+  /* border:solid 1px #bbb; */
+  margin-left:40px;
+  /* display: flex;
+  justify-content: space-between;
+  align-items:center; */
+ /* display: inline-block; */
+}
+.media video{
+  max-width:200px;
+  max-height:100px;
+  border:none;
+}
+.media img{
+  max-width:200px;
+  max-height:100px;
+  border:none;
+}
+.media textarea{
+  resize:none;
+  box-sizing: border-box;
+  padding:10px;
+  width:200px;
+  height:100px;
+  border:none;
+}
+button.primary{
+  float:left;
+  margin:20px 30px;
+  height:30px;
+  padding:6px 40px;
+  border:none;
+  border-radius: 4px;
+  color:#fff;
+}
+button.upload{
+  margin-left:44px;
+   /* margin-top: -50px; */
+  background-color: #00bcff;
+  /* #d8182f、#e23632、#e84631、#e64e37、#e44331、#df3130、#da1d2f、#d6112d  from(#FCD24A), to(#FFC301)) */
+  background: -webkit-gradient(linear, left 0, right 0, from(#ff0000), to(#d8182f))
+}
+button.mine {
+    border:none;
+  background: -webkit-gradient(linear, left 0, right 0, from(#ff0000), to(#d8182f))
+}
+
+button.cancel{
+  margin-left:55px;
+  color:#808080;
+  background-color: #fff;
+  border:solid 1px #adadad;
+  /* margin-top: -50px; */
+}
+button.cancel:hover{
+  background-color: #f7f7f7;
+}
+.file {
+  position: relative;
+  display: inline-block;
+  /* background: #D0EEFF;
+  border: 1px solid #99D3F5; */
+  border-radius: 4px;
+  padding: 4px 12px;
+  overflow: hidden;
+  color: #1E88C7;
+  text-decoration: none;
+  text-indent: 0;
+  line-height: 20px;
+  width: 90px;
+  height: 100px;
+  background: no-repeat url(./assets/home/add.png);
+}
+.file input {
+  position: absolute;
+  font-size: 100px;
+  right: 0;
+  top: 0;
+  opacity: 0;
+}
+.file:hover {
+  background: #FCD24A;
+  border-color: #78C3F3;
+  color: #004974;
+  text-decoration: none;
+}
+ .amap-logo {
+    bottom:-100px;
+   display: none;
+} 
+  .amap-copyright {
+   bottom:-100px;
+   display: none;
+}  

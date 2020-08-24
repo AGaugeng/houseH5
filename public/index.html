@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="viewport-fit=cover,width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no ,shrink-to-fit=no">
+  <meta name="theme-color" content="#000000">
+  <!--
+      manifest.json provides metadata used when your web app is added to the
+      homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
+    -->
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+  <!-- <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico"> -->
+  <link rel="shortcut icon" href="%PUBLIC_URL%/logo.png">
+  <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+  <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+  <title>房长官</title>
+  <style>
+    #root {
+      z-index: 3;
+    }
+  </style>
+</head>
+
+<body>
+  <noscript>
+    You need to enable JavaScript to run this app.
+  </noscript>
+  <div id="root"></div>
+  <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  <script type="text/javascript">
+    var pays = {};
+    var sweixin = null;
+    var cacheSize = 0;
+    var auths = {};
+    function plusReady() {
+
+      plus.share.getServices(function (s) {
+        shares = {};
+        for (var i in s) {
+          var t = s[i];
+          shares[t.id] = t;
+
+        }
+
+        sweixin = shares['weixin'];
+      }, function (e) {
+        console.log('获取分享服务列表失败：' + e.message);
+      });
+      // 获取支付通道
+      plus.payment.getChannels(function (channels) {
+        for (var i in channels) {
+          var channel = channels[i];
+          if (channel.id == 'qhpay' || channel.id == 'qihoo') {	// 过滤掉不支持的支付通道：暂不支持360相关支付
+            continue;
+          }
+          pays[channel.id] = channel;
+          // console.log(channel);
+        }
+      }, function (e) {
+        console.log('获取支付通道失败：' + e.message);
+      });
+      plus.cache.calculate(function (size) {
+        console.log("应用缓存: " + size + " byte!");
+        let k = 1024;
+        cacheSize = Math.floor(size / k / k) + 'MB'
+      })
+      plus.key.addEventListener('backbutton', function () {
+        ('iOS' == plus.os.name) ? plus.nativeUI.confirm('确认退出？', function (e) {
+          if (e.index > 0) {
+            plus.runtime.quit();
+          }
+        }, '房长官', ['取消', '确定']) : (confirm('确认退出？') && plus.runtime.quit());
+      }, false);
+    }
+    if (window.plus) {
+      plusReady();
+    } else {
+      document.addEventListener('plusready', plusReady, false);
+    }
+
+    // 检测是否安装支付服务
+    function checkServices(pc) {
+      if (!pc.serviceReady) {
+        var txt = null;
+        switch (pc.id) {
+          case 'alipay':
+            txt = '检测到系统未安装“支付宝快捷支付服务”，无法完成支付操作，是否立即安装？';
+            break;
+          default:
+            txt = '系统未安装“' + pc.description + '”服务，无法完成支付，是否立即安装？';
+            break;
+        }
+        plus.nativeUI.confirm(txt, function (e) {
+          if (e.index == 0) {
+            pc.installService();
+          }
+        }, pc.description);
+      }
+    }
+
+
+
+    // 分享
+    function share(srv, msg, button) {
+      // alert('分享操作：');
+      if (!srv) {
+        console.log('无效的分享服务！');
+        return;
+      }
+      button && (msg.extra = button.extra);
+      // 发送分享
+      if (srv.authenticated) {
+        console.log('---已授权---');
+        doShare(srv, msg);
+      } else {
+        console.log('---未授权---');
+        srv.authorize(function () {
+          doShare(srv, msg);
+        }, function (e) {
+          console.log('认证授权失败：' + JSON.stringify(e));
+        });
+      }
+    }
+    // 发送分享
+    function doShare(srv, msg) {
+      console.log(JSON.stringify(msg));
+      srv.send(msg, function () {
+        console.log('分享到"' + srv.description + '"成功！');
+      }, function (e) {
+        console.log('分享到"' + srv.description + '"失败: ' + JSON.stringify(e));
+      });
+    }
+    // 解除授权
+    function cancelAuth() {
+      // alert('解除授权：');
+      if (sweixin) {
+        if (sweixin.authenticated) {
+          console.log('取消"' + sweixin.description + '"');
+        }
+        sweixin.forbid();
+      } else {
+        console.log('当前环境不支持微信分享操作!');
+      }
+    }
+
+  </script>
+</body>
+
+</html>
